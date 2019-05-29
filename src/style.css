@@ -1,0 +1,276 @@
+.hidden {
+    display: none;
+}
+.show {
+    display: block;
+}
+
+#play_button {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 20%;
+    width: 35%;
+}
+
+body {
+    background-image: url("images/Other/background_pic1.jpg");
+    background-size: cover;
+    background-color: #cccccc;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.img {
+    height: 20vh;
+}
+
+#Game {
+    position: relative;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+.player {
+    background-image: url("images/Other/mycash.jpeg");
+    min-height: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+
+#Stock {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+#GameStatistics {
+    min-width: 225px;
+    font-size: 2.5vh;
+    align-self: center;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 160px;
+    padding: 20px;
+    overflow: hidden;
+    border: 5px solid rgba(239,239,239,1);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    font: normal 16px/1 Tahoma, Geneva, sans-serif;
+    color: rgba(255,255,255,1);
+    text-align: center;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    background: rgb(180,180,180);
+    -webkit-box-shadow: 6px 1px 1px 0 rgba(247,239,239,0.3) ;
+    box-shadow: 6px 1px 1px 0 rgba(247,239,239,0.3) ;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.2) ;
+      
+}
+
+button {
+    background-color: red;
+    padding: 10px 30px;
+    margin: 4px 2px;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 2vh;
+    opacity: 0.8;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+#OpenDeck {
+    background-image: url("images/Other/background.jpg");
+    box-shadow: 5px 10px 8px #888888;
+    background-size: cover;
+    justify-content: center;
+    min-width: 60vh;
+    overflow: scroll;
+    overscroll-behavior: contain;
+    height: 500px;
+    width: 700px;
+}
+
+@media all and (max-width: 800px) {
+    
+    .img {
+        height: 12vw;
+    }
+    
+    #GameStatistics {
+        font-size: 1.3vw;
+    }
+    #OpenDeck {
+        min-width: 30vw;
+    }
+}
+
+#endGamePopup {
+    position: fixed;
+    z-index: 10;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.endGamePopup-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 40%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+#gameButtons {
+    padding-left: 10px;
+}
+
+#popupButtons {
+    display: flex;
+    justify-content: space-between; 
+}
+
+.endGamePopupButton {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .endGamePopupButton:hover,
+    .endGamePopupButton:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.endGamePopup-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.endGamePopup-body {
+    padding: 2px 16px;
+}
+
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    /* The actual popup */
+    .popup .popuptext {
+        visibility: hidden;
+        width: 160px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -80px;
+    }
+
+        /* Popup arrow */
+        .popup .popuptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+    /* Toggle this class - hide and show the popup */
+    .popup .show {
+        visibility: visible;
+        -webkit-animation: fadeIn 1s;
+        animation: fadeIn 1s;
+    }
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
