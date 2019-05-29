@@ -15,6 +15,8 @@ export class Dominoes {
         this.gameHistory;
         this.gameHistoryCurrState;
         this.renderFunc;
+        this.currCard;
+        this.matchCards = [];
     }
 
     initializeGame() {
@@ -141,28 +143,45 @@ export class Dominoes {
             if(chosenCardID){this.userTurns(chosenCardID);}
             this.renderFunc();
         }
-        else // computer turn
-        {
-            let cardsToSet = this.computerAlgorithmWrapper();
-            setTimeout((() => {
-                this.computerTurns(cardsToSet);
-            }).bind(this), 1000);
-        }
     }
 
     userTurns(chosenCardID) {
         let chosenCard = this.getUserCardByElementID(chosenCardID);
         if (this.isValidStep(chosenCard)||this.openDeck.length == 0) {
-            this.executeUserStep(chosenCard);
+            this.currCard = chosenCard;
+            this.findMatch(this.currCard);
+            this.renderFunc();
+            if(this.openDeck.length ==0){
+                this.useCard(this.players[0].cards, this.currCard, "UserCard", null);
+                this.executeUserStep();
+            }
         }
         else {
             this.warnIllegalUserStep(chosenCardID);
         }
     }
 
-    useCard(cards, chosenCard, owner) {
+    executeUserStep() {
+        
+        this.increaseUserTurnsAmount();
+        this.updateScore();
+        this.modifyTurnIndicate(false);
+        this.currCard = null;
+        this.matchCards = [];
+
+        if (this.players[0].cards.length == 0)
+            this.endGame(true);
+        else
+            this.gameManager();
+    
+    }
+
+    useCard(cards, chosenCard, owner, cardOnBoard) {
         let cardIndex = this.getArrayIndexOfCard(cards, chosenCard);
-        let matchCard = this.matchUpdate(chosenCard);
+        if(this.openDeck.length !=0){
+            this.matchUpdate(chosenCard, cardOnBoard);
+        }
+        console.log('useCard: ' +chosenCard.top +' '+ chosenCard.buttom);
         this.openDeck.push(chosenCard);
         cards.splice(cardIndex, 1);
         this.updateGameHistory();
@@ -229,10 +248,9 @@ export class Dominoes {
         return false;
     }
 
-    matchUpdate(card) {
-        if(this.openDeck.length == 0){return null;}
+    matchUpdate(card, cardOnBoard) {
+        if(this.openDeck.length == 0){return true;}
         else{
-            let cardOnBoard = this.findMatch(card);
             if(card.Type == "duble"){
                 card.isUp = !cardOnBoard.isUp;
                 if(cardOnBoard.isUp){
@@ -395,23 +413,28 @@ export class Dominoes {
 
     findMatch(card){
         for (let i = 0; i < this.openDeck.length; i++) {
-            if((card.top === this.openDeck[i].top && this.openDeck[i].isTopValid) || (card.buttom === this.openDeck[i].top && this.openDeck[i].isTopValid) 
-            || (card.top === this.openDeck[i].buttom && this.openDeck[i].isButtomValid) || (card.buttom === this.openDeck[i].buttom && this.openDeck[i].isButtomValid)){
-                return this.openDeck[i];
-            }
-            
+            this.openDeck[i].border =false;
             if(this.openDeck[i].Type === "duble"){
                 if((card.top === this.openDeck[i].top || card.buttom === this.openDeck[i].top)&& (this.openDeck[i].isMidLeftValid || this.openDeck[i].isMidRigthValid)){
-                    return this.openDeck[i];
+                    this.openDeck[i].border = true;
+                    this.matchCards.push(this.openDeck[i]);
+                }
+                else if((card.top === this.openDeck[i].top && this.openDeck[i].isTopValid) || (card.buttom === this.openDeck[i].top && this.openDeck[i].isTopValid) 
+                || (card.top === this.openDeck[i].buttom && this.openDeck[i].isButtomValid) || (card.buttom === this.openDeck[i].buttom && this.openDeck[i].isButtomValid)){
+                    this.openDeck[i].border = true;
+                    this.matchCards.push(this.openDeck[i]);
+                 }
+            }      
+            else{
+                if((card.top === this.openDeck[i].top && this.openDeck[i].isTopValid) || (card.buttom === this.openDeck[i].top && this.openDeck[i].isTopValid) 
+                || (card.top === this.openDeck[i].buttom && this.openDeck[i].isButtomValid) || (card.buttom === this.openDeck[i].buttom && this.openDeck[i].isButtomValid)){
+                    this.openDeck[i].border = true;
+                    this.matchCards.push(this.openDeck[i]);
                 }
             }
-        }     
+        } 
+        return this.matchCards;
     }
-
-
-
-
-
 
     flipCard(card){
         let temp = card.top;
@@ -432,6 +455,19 @@ export class Dominoes {
         return null;
     }
 
+    getOpenDeckdByElementID(cardElementID) {
+        console.log(' getOpenDeckdByElementID A ' +cardElementID+ '  OPEN DEC LANGH' +this.openDeck.length);
+        var splittedID = cardElementID.split("_");
+        for (var i = 0; i < this.openDeck.length; i++) {
+            console.log(' getOpenDeckdByElementID B '+ this.openDeck[i].ID +' ' +splittedID[3]);
+            if (this.openDeck[i].ID == splittedID[3]){
+                console.log(' getOpenDeckdByElementID C '+ this.openDeck[i].top +' ' + this.openDeck[i].buttom);
+                return this.openDeck[i];
+            }
+        }
+        return null;
+    }
+
     warnIllegalUserStep(chosenCardID) {
         var chosenCardElement = this.getElementByCard(chosenCardID);
         chosenCardElement.className = "img card animated shake";
@@ -445,20 +481,7 @@ export class Dominoes {
     ///// User methods /////
     ////////////////////////
 
-    executeUserStep(chosenCard) {
-        
-        this.useCard(this.players[0].cards, chosenCard, "UserCard");
 
-        this.increaseUserTurnsAmount();
-        this.updateScore();
-        this.modifyTurnIndicate(false);
-
-        if (this.players[0].cards.length == 0)
-            this.endGame(true);
-        else
-            this.gameManager();
-    
-    }
 
     isUserHaveCardToSet() {
         let res = false;
@@ -484,6 +507,37 @@ export class Dominoes {
     updatePulls(){
         this.stats.userPull++;
     }
+
+    onClickOpenDeck(chosenCardID){
+        let chosenCard = this.getOpenDeckdByElementID(chosenCardID);
+       // console.log(chosenCard.top + ' ' + chosenCard.buttom);
+        let matchCards = this.findMatch(this.currCard);
+        this.renderFunc();
+        if(this.blabla(matchCards,chosenCard)){ 
+          this.useCard(this.players[0].cards, this.currCard, "UserCard", chosenCard);
+            this.executeUserStep();
+        }
+        else{
+              this.currCard = null;
+            this.matchCards = [];
+        }
+        this.clearBorder();
+        this.renderFunc();
+    }
+    clearBorder(){
+        for (let i = 0; i < this.openDeck.length; i++) {
+            this.openDeck[i].border =false;}
+    }
+
+    blabla(matchCards,chosenCard ){
+        for (let i = 0; i < this.matchCards.length; i++) {
+            if(matchCards[i].ID === chosenCard.ID){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     onClickFoldDeck() {
         if (this.userTurn === true && this.gameStatus == "started" && this.openDeck.length>0) {
@@ -519,12 +573,13 @@ class Card {
         this.isTopValid = isTopValid;
         this.isButtomValid = isButtomValid;
         ///change
-        this.row = 10;
-        this.col = 10;
+        this.row = 20;
+        this.col = 20;
         this.deg = 0;
         this.isUp = true;
         this.isMidLeftValid = isMidLeftValid;
         this.isMidRigthValid = isMidRigthValid;
+        this.border = false;
     }
 }
 

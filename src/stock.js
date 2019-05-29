@@ -61,11 +61,28 @@ class OpenDeck extends React.Component {
         super(args);
     }
 
+    handleClick(event) {
+        game.onClickOpenDeck(event.target.id);
+    }
+
     openDeckCardStyle(card) {
+        console.log(card.border +' '+ card.top+" " + card.buttom);
+        let box_border;
+        let bord;
+        if(card.border){
+            box_border= `green`;
+            bord = `5px solid transparent`;
+        }
+        else{
+            box_border=`clear`;
+            bord = `1px solid transparent`;
+        }
         let openDeckCardStyle = {
             transform: `rotate(${card.deg}deg)`,
             gridColumn: `${card.col}`,
             gridRow: `${card.row}`,
+            border: bord,
+            borderColor: box_border
         };
         return openDeckCardStyle;
     }
@@ -75,15 +92,22 @@ class OpenDeck extends React.Component {
         else {return `../src/images/cards/${card.buttom}_${card.top}.png`}
     }
 
+    idMake(card){
+        if(card.top <= card.buttom){ return `lastOpenCard_${card.top}_${card.button}_${card.ID}` }
+        else {return `lastOpenCard_${card.buttom}_${card.top}_${card.ID}`}
+    }
+
     render() {
         if (this.props.cards.length > 0) {
             let cards =  this.props.cards.map((card) => (
                     <img 
                     style = {this.openDeckCardStyle(card)}
                     src = {this.srcImg(card)}
-                    id = {`lastOpenCard_${card.top}_${card.button}`}
+                    id = {this.idMake(card)}
                     className="img"
-                    key = {`lastOpenCard_${card.top}_${card.button}_${card.ID}`}/>
+                    key = {`lastOpenCard_${card.top}_${card.button}_${card.ID}`}
+                    onClick={((e) => { this.handleClick(e) })}/>
+                    
         ))
             return (
             <div id="OpenDeck">
