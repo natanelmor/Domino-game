@@ -182,6 +182,7 @@ export class Dominoes {
             this.matchUpdate(chosenCard, cardOnBoard);
         }
         this.openDeck.push(chosenCard);
+        this.checkBoardSize();
         cards.splice(cardIndex, 1);
         this.updateGameHistory();
     }
@@ -410,6 +411,29 @@ export class Dominoes {
         }
     }
 
+    checkBoardSize(){
+        for (let i = 0; i < this.openDeck.length; i++) {
+            if(this.openDeck[i].row<=0){
+                this.EnlargeBoardRow();
+            }
+            else if(this.openDeck[i].col<=0){
+                this.EnlargeBoardCol();
+            }
+        }
+    }
+
+    EnlargeBoardCol(){
+        for (let i = 0; i < this.openDeck.length; i++) {
+            this.openDeck[i].col++;
+        }
+    }
+    EnlargeBoardRow(){
+        for (let i = 0; i < this.openDeck.length; i++) {
+            this.openDeck[i].row++;
+        }
+    }
+
+
     findMatch(card){
         for (let i = 0; i < this.openDeck.length; i++) {
             this.openDeck[i].border =false;
@@ -568,8 +592,8 @@ class Card {
         this.isTopValid = isTopValid;
         this.isButtomValid = isButtomValid;
         ///change
-        this.row = 20;
-        this.col = 20;
+        this.row = 1;
+        this.col = 2;
         this.deg = 0;
         this.isUp = true;
         this.isMidLeftValid = isMidLeftValid;
