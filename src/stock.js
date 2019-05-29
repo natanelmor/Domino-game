@@ -66,7 +66,6 @@ class OpenDeck extends React.Component {
     }
 
     openDeckCardStyle(card) {
-        console.log(card.border +' '+ card.top+" " + card.buttom);
         let box_border;
         let bord;
         if(card.border){
@@ -111,7 +110,7 @@ class OpenDeck extends React.Component {
         ))
             return (
             <div id="OpenDeck">
-                <div style= {{display: `grid`, gridGap: `0px`, gridAutoColumns: `max-content`}} >
+                <div style= {{display: `grid`, gridAutoColumns: `203px`}} >
                     {cards}
                </div>
             </div>

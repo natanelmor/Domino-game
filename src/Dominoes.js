@@ -181,7 +181,6 @@ export class Dominoes {
         if(this.openDeck.length !=0){
             this.matchUpdate(chosenCard, cardOnBoard);
         }
-        console.log('useCard: ' +chosenCard.top +' '+ chosenCard.buttom);
         this.openDeck.push(chosenCard);
         cards.splice(cardIndex, 1);
         this.updateGameHistory();
@@ -456,12 +455,9 @@ export class Dominoes {
     }
 
     getOpenDeckdByElementID(cardElementID) {
-        console.log(' getOpenDeckdByElementID A ' +cardElementID+ '  OPEN DEC LANGH' +this.openDeck.length);
         var splittedID = cardElementID.split("_");
         for (var i = 0; i < this.openDeck.length; i++) {
-            console.log(' getOpenDeckdByElementID B '+ this.openDeck[i].ID +' ' +splittedID[3]);
             if (this.openDeck[i].ID == splittedID[3]){
-                console.log(' getOpenDeckdByElementID C '+ this.openDeck[i].top +' ' + this.openDeck[i].buttom);
                 return this.openDeck[i];
             }
         }
@@ -510,7 +506,6 @@ export class Dominoes {
 
     onClickOpenDeck(chosenCardID){
         let chosenCard = this.getOpenDeckdByElementID(chosenCardID);
-       // console.log(chosenCard.top + ' ' + chosenCard.buttom);
         let matchCards = this.findMatch(this.currCard);
         this.renderFunc();
         if(this.blabla(matchCards,chosenCard)){ 

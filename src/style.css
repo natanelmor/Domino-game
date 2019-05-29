@@ -104,7 +104,7 @@ button {
     background-image: url("images/Other/background.jpg");
     box-shadow: 5px 10px 8px #888888;
     background-size: cover;
-    justify-content: center;
+    justify-content: left;
     min-width: 60vh;
     overflow: scroll;
     overscroll-behavior: contain;
