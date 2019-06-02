@@ -427,12 +427,12 @@ export class Dominoes {
             this.openDeck[i].col++;
         }
     }
+ 
     EnlargeBoardRow(){
         for (let i = 0; i < this.openDeck.length; i++) {
             this.openDeck[i].row++;
         }
     }
-
 
     findMatch(card){
         for (let i = 0; i < this.openDeck.length; i++) {
@@ -543,6 +543,7 @@ export class Dominoes {
         this.clearBorder();
         this.renderFunc();
     }
+    
     clearBorder(){
         for (let i = 0; i < this.openDeck.length; i++) {
             this.openDeck[i].border =false;}
@@ -556,7 +557,6 @@ export class Dominoes {
         }
         return false;
     }
-
 
     onClickFoldDeck() {
         if (this.userTurn === true && this.gameStatus == "started" && this.openDeck.length>0) {

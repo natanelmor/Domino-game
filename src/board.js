@@ -21,12 +21,6 @@ export class Board extends React.Component {
             userCards: game.players[0].cards
         }
     }
-    /*
-    componentDidMount() {
-        if (!game.userTurn)
-            game.gameManager();
-    }
-    */
 
     renderAll() {
         this.setState({

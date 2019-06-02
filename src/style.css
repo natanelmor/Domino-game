@@ -56,35 +56,31 @@ body {
 }
 
 #GameStatistics {
-    min-width: 225px;
-    font-size: 2.5vh;
-    align-self: center;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    width: 160px;
-    padding: 20px;
-    overflow: hidden;
+    background-image: url("images/Other/BACKGROUND.jpeg");
+    background-size: cover;
+    width: 170px;
+    height: 100px;
+    padding: 50px;
     border: 5px solid rgba(239,239,239,1);
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    font: normal 16px/1 Tahoma, Geneva, sans-serif;
+    font: normal 18px/1 Tahoma, Geneva, sans-serif;
     color: rgba(255,255,255,1);
     text-align: center;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    background: rgb(180,180,180);
     -webkit-box-shadow: 6px 1px 1px 0 rgba(247,239,239,0.3) ;
     box-shadow: 6px 1px 1px 0 rgba(247,239,239,0.3) ;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.2) ;
+    text-shadow: 2px 2px 2px black;
+    align-self: center;
+    justify-content: center;
+    text-align: center;
       
 }
 
 button {
-    background-color: red;
+    background-color:red;
     padding: 10px 30px;
     margin: 4px 2px;
-    border: none;
+    border: white;
     color: white;
     text-align: center;
     font-size: 2vh;
@@ -201,7 +197,7 @@ button {
 
 .endGamePopup-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: darkcyan;
     color: white;
 }
 

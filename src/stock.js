@@ -13,13 +13,11 @@ export class Stock extends React.Component {
         return (
             <div id="Stock">
                 <div> 
-                    <GameButtons />
                     <GameStats />
+                    <GameButtons />
                 </div>
                     <OpenDeck cards={this.props.openDeckCards} />
-                <div>
                     <FoldDeck cards={this.props.foldDeckCards} />
-                </div>
             </div>
         );
     }
@@ -30,11 +28,11 @@ class GameButtons extends React.Component {
         super(args);
     }
 
-    surrenderPlayAgain() {
+    endGamePlayAgain() {
         if (game.gameStatus == "navigate")
             game.playAgain();
         else
-            game.surrender();
+            game.endGame();
     }
 
     back() {
@@ -48,7 +46,7 @@ class GameButtons extends React.Component {
     render() {
         return (
             <div id="gameButtons">
-                <button id="Surrender" type="button" onClick={this.surrenderPlayAgain.bind(this)}>{game.gameStatus == "navigate" ? "Play again" : "Surrender"}</button>
+                <button id="endGame" type="button" onClick={this.endGamePlayAgain.bind(this)}>{game.gameStatus == "navigate" ? "Play again" : "END GAME"}</button>
                 <button id="Back" className={(game.gameStatus == "navigate" && game.gameHistoryCurrStateIndex > 0) ? 'show' : 'hidden'} type="button" onClick={this.back.bind(this)}>Back</button>
                 <button id="Forward" className={(game.gameStatus == "navigate"&& game.gameHistoryCurrStateIndex < game.gameHistory.length - 1) ? 'show' : 'hidden'} type="button" onClick={this.forward.bind(this)}>Forward</button>
             </div>
@@ -148,7 +146,7 @@ class FoldDeck extends React.Component {
     renderTheFoldDeck() {
         return (
             game.foldDeck.map((card, i) => (
-                <img src = {'../src/images/Other/CASH.jpeg'}
+                <img src = {'../src/images/Other/CASH.jpg'}
                     id = {`foldDeckCard_${card.top}_${card.button}`}
                     className="img"
                     style={this.foldDeckCardStyle(i)}
