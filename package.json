@@ -26,6 +26,6 @@
     "webpack-cli": "^3.2.3"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.2.5"
+    "@babel/polyfill": "^7.12.1"
   }
 }
